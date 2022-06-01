@@ -1,26 +1,32 @@
 require 'base64'
-def universal(gedel,input)
+
+def gen_args(inputs, offset = 0)
+  inputs.each_with_index.inject("") do |sum, (x,i)|
+    sum + "x#{offset+i+1}=#{x}"
+  end
+end
+
+def universal(gedel,inputs)
   prog = Base64.decode64(gedel)
-  ans = eval(input + prog)
-  return ans
+  args = gen_args(inputs)
+  eval(args + prog)
 end
 
 def smn(m, gedel, inputs)
   prog = Base64.decode64(gedel)
-  inputs.each_with_index.reverse_each do |x,i|
-    prog = "x#{m+i+1}=#{x}" + prog
-  end
-  return Base64.strict_encode(prog)
+  args = gen_args(inputs, m)
+  Base64.strict_encode(args + prog)
 end
 
-def f(ary, z)
-  
+def fix(gedel, n)
+  prog = Base64.decode64(gedel)
+  f = << ~EOS
+  x#{n} = smn(n, x#{n}, [x#{n}])
+  #{prog}
+  EOS
+  d = Base64.strict_encode(f)
+  smn(n, d, d)
 end
-
-def fix()
-  hoge
-end
-
 
 def h(x,y)
   return universal(universal(y,x),'')
