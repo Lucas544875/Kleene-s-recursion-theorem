@@ -1,8 +1,10 @@
 require 'base64'
 
 def gen_args(inputs, offset = 0)
-  inputs.each_with_index.inject("") do |sum, (x,i)|
-    sum + "x#{offset+i+1}=#{x}"
+  if offset == 0
+    "X = " + inputs.to_s
+  else
+    "X[#{offset-1},#{inputs.length}] = " + inputs.to_s
   end
 end
 
@@ -31,3 +33,4 @@ end
 def h(x,y)
   return universal(universal(y,x),'')
 end
+
