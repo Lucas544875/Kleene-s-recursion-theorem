@@ -29,10 +29,16 @@ def fix(prog_g, n)
   smn(n, f_g, [f_g])
 end
 
-def h(x,y)
-  return universal(universal(y,x),'')
+def recursion(prog_g, n)
+  f = <<~EOS
+  universal(universal(#{prog_g},x),x)
+  EOS
+  f_g = encode(f)
+  fix(f_g, n)
 end
 
+
+#debug
 suc = <<~EOS
 x[0] + 1
 EOS
@@ -44,10 +50,15 @@ EOS
 add_g = encode(add)
 add3_g = smn(1, add_g, [3])
 
-(0 .. 10).each do |n|
-  e = fix(add_g, 1)
-  d2 = universal(e,[n])
-  d1 = universal(add_g, [n, e])
-  p d1 == d2
-end
+#(0 .. 10).each do |n|
+#  e = fix(add_g, 1)
+#  d2 = universal(e,[n])
+#  d1 = universal(add_g, [n, e])
+#  p d1 == d2
+#end
 #print decode(d1)
+
+e = recursion(add3_g, 0)
+d1 = universal(e,[])
+#d2 = universal(universal(e,[]), [])
+#p d1 == d2
