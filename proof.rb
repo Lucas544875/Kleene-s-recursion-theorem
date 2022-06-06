@@ -57,7 +57,6 @@ uni = <<~EOS
 universal(x[0],[])
 EOS
 uni_g = encode(uni)
-p quine = y_combinator(uni_g, 0)
 
 __END__
 
@@ -78,3 +77,6 @@ d1 = universal(add_g, [n, fixpoint])
 d1 == d2 #=> true
 #任意の帰納的関数 f に対して
 #f(x,e) = universal(e, x) となるような e を計算できる
+
+p quine = y_combinator(uni_g, 0)
+# 万能関数の不動点はクワインと呼ばれる
