@@ -79,11 +79,14 @@ diff = 8674902943253894975761493816011735850335645272865677887187684913482310061
 ans2 = universal(add_fix,[diff])
 ans1 = universal(universal(add_g,[diff,add_fix]),[diff])
 
-__END__
-
-uni = <<~EOS
-universal($x[0],[])
+id = <<~EOS
+$x[0]
 EOS
+id_g = encode(id)
+quine_seed = <<~EOS
+universal(smn(0,1,#{id_g},[$x[0]]),[])
+EOS
+quine_seed_g = encode(quine_seed)
 
-p quine = fix(uni_g, 0)
-# 万能関数の不動点はクワインと呼ばれる
+quine = rec(quine_seed_g, 0)
+p quine == universal(quine,[])
