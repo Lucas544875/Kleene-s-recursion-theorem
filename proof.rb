@@ -89,4 +89,5 @@ EOS
 quine_seed_g = encode(quine_seed)
 
 quine = rec(quine_seed_g, 0)
-p quine == universal(quine,[])
+quine == universal(quine,[])
+#=>true
