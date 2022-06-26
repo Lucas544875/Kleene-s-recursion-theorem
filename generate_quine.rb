@@ -27,11 +27,13 @@ def universal(prog_g, inputs)
   return ans
 end
 
+$definitionstr = '$Definition = <<\'DEF\''+"\n"+$Definition +"\n"+"DEF\n"
+
 def smn(m, n, prog_g, inputs)
-  init = "$x=[] unless $x\n"
+  init = "$x=[] unless $x\n" + "$x_temp=[] unless $x_temp\n"
   prog = decode(prog_g)
   args = "$x[#{m}, #{n}] = " + inputs[0, n].to_s + "\n"
-  encode($Definition + init + args + prog)
+  encode($definitionstr + $Definition + init + args + prog)
 end
 
 def rec(prog_g, n)
@@ -44,6 +46,7 @@ def rec(prog_g, n)
   smn(n, 1, f_g, [f_g])
 end
 DEF
+$definitionstr = '$Definition = <<\'DEF\''+"\n"+$Definition +"\n"+"DEF\n"
 
 def universal(prog_g, inputs)#万能関数
   prog = decode(prog_g)
@@ -56,10 +59,10 @@ def universal(prog_g, inputs)#万能関数
 end
 
 def smn(m, n, prog_g, inputs)#smn定理
-  init = "$x=[] unless $x\n"
+  init = "$x=[] unless $x\n" + "$x_temp=[] unless $x_temp\n"
   prog = decode(prog_g)
   args = "$x[#{m}, #{n}] = " + inputs[0, n].to_s + "\n"
-  encode($Definition + init + args + prog)
+  encode($definitionstr + $Definition + init + args + prog)
 end
 
 def rec(prog_g, n)#再帰定理
@@ -73,7 +76,7 @@ def rec(prog_g, n)#再帰定理
 end
 
 id = <<~EOS
-decode($x[0])
+print(decode($x[0]))
 EOS
 #print (decode($x[0]))
 #とすると標準入出力に出力
@@ -81,8 +84,8 @@ id_g = encode(id)
 quine_seed = <<~EOS
 universal(smn(0,1,#{id_g},[$x[0]]),[])
 EOS
-quine_seed_g = encode($Definition + quine_seed)
+quine_seed_g = encode($definitionstr + $Definition + quine_seed)
 
 quine = decode(rec(quine_seed_g, 0))
-print eval(quine) == quine
+eval(quine)
 #=>true
