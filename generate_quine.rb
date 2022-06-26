@@ -27,7 +27,7 @@ def universal(prog_g, inputs)
   return ans
 end
 
-$definitionstr = '$Definition = <<\'DEF\''+"\n"+$Definition +"\n"+"DEF\n"
+$definitionstr = '$Definition = <<\'DEF\''+"\n"+$Definition +"DEF\n"
 
 def smn(m, n, prog_g, inputs)
   init = "$x=[] unless $x\n" + "$x_temp=[] unless $x_temp\n"
@@ -46,7 +46,7 @@ def rec(prog_g, n)
   smn(n, 1, f_g, [f_g])
 end
 DEF
-$definitionstr = '$Definition = <<\'DEF\''+"\n"+$Definition +"\n"+"DEF\n"
+$definitionstr = '$Definition = <<\'DEF\''+"\n"+$Definition +"DEF\n"
 
 def universal(prog_g, inputs)#万能関数
   prog = decode(prog_g)
