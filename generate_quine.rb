@@ -73,8 +73,10 @@ def rec(prog_g, n)#再帰定理
 end
 
 id = <<~EOS
-print (decode($x[0]))
+decode($x[0])
 EOS
+#print (decode($x[0]))
+#とすると標準入出力に出力
 id_g = encode(id)
 quine_seed = <<~EOS
 universal(smn(0,1,#{id_g},[$x[0]]),[])
@@ -82,5 +84,5 @@ EOS
 quine_seed_g = encode($Definition + quine_seed)
 
 quine = decode(rec(quine_seed_g, 0))
-eval(quine)
+print eval(quine) == quine
 #=>true
