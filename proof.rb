@@ -25,7 +25,7 @@ def smn(m, n, prog_g, inputs)#smn定理
   encode(args + prog)
 end
 
-def rec(prog_g, n)#再帰定理
+def rec(prog_g, n)#帰納定理 (クリーネの再帰定理)
   prog = decode(prog_g)
   f = <<~EOS
   $x[#{n}] = smn(#{n}, 1, $x[#{n}], [$x[#{n}]])
